@@ -19,5 +19,15 @@
     // Do any additional setup after loading the view, typically from a nib.
 }
 
+- (IBAction)numberInput:(UIButton *)sender {
+}
+
+
+- (IBAction)allClear:(id)sender {
+}
+
+- (IBAction)memoryClear:(UIButton *)sender {
+}
+
 
 @end
