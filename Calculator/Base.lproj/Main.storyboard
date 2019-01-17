@@ -243,9 +243,12 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GvD-n2-FGh">
                                 <rect key="frame" x="274" y="504" width="63.5" height="142.5"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="30"/>
-                                <state key="normal" title="＝">
+                                <state key="normal" title="=">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="mathSymbolExpression:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jka-hc-hAY"/>
+                                </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="LSe-ZY-CXO">
                                 <rect key="frame" x="195" y="504" width="64" height="142.5"/>
@@ -379,9 +382,9 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="inputTextField" destination="gYn-bw-vmq" id="Klt-zw-h65"/>
-                        <outlet property="resultTextField" destination="aVc-dN-la4" id="CCY-Li-SVb"/>
-                        <outlet property="symbolsLabel" destination="sw9-ML-BL1" id="Oo1-Z5-ORF"/>
+                        <outlet property="inputLabel" destination="gYn-bw-vmq" id="Klt-zw-h65"/>
+                        <outlet property="operatorLabel" destination="sw9-ML-BL1" id="Oo1-Z5-ORF"/>
+                        <outlet property="resultLabel" destination="aVc-dN-la4" id="CCY-Li-SVb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
