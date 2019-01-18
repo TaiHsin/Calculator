@@ -13,6 +13,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *inputLabel;
 @property (weak, nonatomic) IBOutlet UILabel *resultLabel;
 @property (weak, nonatomic) IBOutlet UILabel *operatorLabel;
+@property NSDecimalNumber *memoryAddNumber;
+@property NSDecimalNumber *memorySubNumber;
 
 @end
 
@@ -21,6 +23,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self resetLabels];
+
+    NSDecimalNumber *memoryAddNumber = (NSDecimalNumber *)[NSDecimalNumber numberWithInt: 0];
+    NSDecimalNumber *memorySubNumber = (NSDecimalNumber *)[NSDecimalNumber numberWithInt: 0];
 }
 
 - (IBAction)inputNumber:(UIButton *)sender {
@@ -58,6 +63,7 @@
     self.resultLabel.text = resultString;
     self.operatorLabel.text = inputString;
 }
+
 - (IBAction)mathSymbol:(UIButton *)sender {
     NSString *inputString = [[sender titleLabel] text];
     NSString *currentString = self.inputLabel.text;
@@ -68,6 +74,7 @@
         if (range.length == 0) {
             self.inputLabel.text = [currentString stringByAppendingString: inputString];
         }
+        
     } else if ([inputString isEqualToString: @"+-"]) {
         NSRange range = [currentString rangeOfString: @"-"];
         
@@ -88,6 +95,22 @@
 
 }
 
+- (IBAction)memoryExpression:(UIButton *)sender {
+    NSString *inputString = [[sender titleLabel] text];
+    NSString *currentString = self.inputLabel.text;
+    NSDecimalNumber *inputNumber = [NSDecimalNumber decimalNumberWithString: inputString];
+    
+    if ([inputString isEqualToString: @"M+"]) {
+        self.memoryAddNumber = [self.memoryAddNumber decimalNumberByAdding: inputNumber];
+        
+    } else if ([inputString isEqualToString: @"M-"]) {
+        self.memorySubNumber = [self.memorySubNumber decimalNumberBySubtracting: inputNumber];
+        
+    } else if ([inputString isEqualToString: @"MR"]) {
+        
+        
+    }
+}
 
 - (NSString *)calculateResult:(NSString *)operator
                    withResult:(NSDecimalNumber *)resultNumber
@@ -122,6 +145,5 @@
     self.resultLabel.text = @" ";
     self.operatorLabel.text = @" ";
 }
-
 
 @end

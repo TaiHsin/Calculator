@@ -47,6 +47,9 @@
                                                 <state key="normal" title="M+">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="memoryExpression:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6Um-Ns-tJ0"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wuO-dd-ePJ">
                                                 <rect key="frame" x="157.5" y="0.0" width="64" height="63.5"/>
