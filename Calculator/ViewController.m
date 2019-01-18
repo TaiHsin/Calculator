@@ -13,8 +13,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *inputLabel;
 @property (weak, nonatomic) IBOutlet UILabel *resultLabel;
 @property (weak, nonatomic) IBOutlet UILabel *operatorLabel;
-@property NSDecimalNumber *memoryAddNumber;
-@property NSDecimalNumber *memorySubNumber;
+@property NSDecimalNumber *memoryNumber;
+@property BOOL flag;
 
 @end
 
@@ -24,13 +24,17 @@
     [super viewDidLoad];
     [self resetLabels];
 
-    NSDecimalNumber *memoryAddNumber = (NSDecimalNumber *)[NSDecimalNumber numberWithInt: 0];
-    NSDecimalNumber *memorySubNumber = (NSDecimalNumber *)[NSDecimalNumber numberWithInt: 0];
+    self.memoryNumber = (NSDecimalNumber *)[NSDecimalNumber numberWithInt: 0];
 }
 
 - (IBAction)inputNumber:(UIButton *)sender {
     NSString *inputString = [[sender titleLabel] text];
     NSString *currentString = self.inputLabel.text;
+    
+    if (self.flag == true) {
+        currentString = @"0";
+        self.flag = false;
+    }
 
     if ([currentString length] == 1 &&
         [[currentString substringFromIndex: 0] isEqualToString: @"0"]) {
@@ -68,6 +72,11 @@
     NSString *inputString = [[sender titleLabel] text];
     NSString *currentString = self.inputLabel.text;
     
+    if (self.flag == true) {
+        currentString = @"0";
+        self.flag = false;
+    }
+    
     if ([inputString isEqualToString: @"."]) {
         NSRange range = [currentString rangeOfString: @"."];
         
@@ -91,24 +100,24 @@
     [self resetLabels];
 }
 
-- (IBAction)clearMemory:(UIButton *)sender {
-
-}
-
 - (IBAction)memoryExpression:(UIButton *)sender {
     NSString *inputString = [[sender titleLabel] text];
     NSString *currentString = self.inputLabel.text;
-    NSDecimalNumber *inputNumber = [NSDecimalNumber decimalNumberWithString: inputString];
+    NSDecimalNumber *currentNumber = [NSDecimalNumber decimalNumberWithString: currentString];
+    self.flag = true;
     
     if ([inputString isEqualToString: @"M+"]) {
-        self.memoryAddNumber = [self.memoryAddNumber decimalNumberByAdding: inputNumber];
+        self.memoryNumber = [self.memoryNumber decimalNumberByAdding: currentNumber];
         
     } else if ([inputString isEqualToString: @"M-"]) {
-        self.memorySubNumber = [self.memorySubNumber decimalNumberBySubtracting: inputNumber];
+        self.memoryNumber = [self.memoryNumber decimalNumberBySubtracting: currentNumber];
         
     } else if ([inputString isEqualToString: @"MR"]) {
+        NSString *memoryString = [NSString stringWithFormat: @"%@", self.memoryNumber];
+        self.inputLabel.text = memoryString;
         
-        
+    } else {
+        self.memoryNumber = (NSDecimalNumber *)[NSDecimalNumber numberWithInt: 0];
     }
 }
 

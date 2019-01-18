@@ -35,7 +35,7 @@
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="clearMemory:" destination="BYZ-38-t0r" eventType="touchUpInside" id="wEA-Mf-qxr"/>
+                                                    <action selector="memoryExpression:" destination="BYZ-38-t0r" eventType="touchUpInside" id="IBf-Tp-ebi"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sji-7n-Qui">
@@ -60,6 +60,9 @@
                                                 <state key="normal" title="M-">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="memoryExpression:" destination="BYZ-38-t0r" eventType="touchUpInside" id="KPb-oY-80H"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FVE-QF-JYF">
                                                 <rect key="frame" x="236.5" y="0.0" width="63.5" height="63.5"/>
@@ -70,6 +73,9 @@
                                                 <state key="normal" title="MR">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="memoryExpression:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Mcz-uV-Jgh"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
