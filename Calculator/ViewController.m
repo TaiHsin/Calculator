@@ -10,7 +10,7 @@
 
 @interface ViewController ()
 
-@property (weak, nonatomic) IBOutlet UILabel *inputLabel;
+@property (weak, nonatomic) IBOutlet UILabel *currentLabel;
 @property (weak, nonatomic) IBOutlet UILabel *resultLabel;
 @property (weak, nonatomic) IBOutlet UILabel *operatorLabel;
 @property NSDecimalNumber *memoryNumber;
@@ -29,12 +29,8 @@
 
 - (IBAction)inputNumber:(UIButton *)sender {
     NSString *inputString = [[sender titleLabel] text];
-    NSString *currentString = self.inputLabel.text;
-    
-    if (self.flag == true) {
-        currentString = @"0";
-        self.flag = false;
-    }
+    NSString *currentString = self.currentLabel.text;
+    currentString = [self memoryFlagCheck: currentString];
 
     if ([currentString length] == 1 &&
         [[currentString substringFromIndex: 0] isEqualToString: @"0"]) {
@@ -44,12 +40,13 @@
         currentString = @"-";
     }
     
-    self.inputLabel.text = [currentString stringByAppendingString: inputString];
+    self.currentLabel.text = [currentString stringByAppendingString: inputString];
+    [self limitLabelLength];
 }
 
 - (IBAction)operatorCalculation:(UIButton *)sender {
     NSString *inputString = [[sender titleLabel] text];
-    NSString *currentString = self.inputLabel.text;
+    NSString *currentString = self.currentLabel.text;
     NSString *resultString = self.resultLabel.text;
     NSString *operator = self.operatorLabel.text;
     NSDecimalNumber *currentNumber = [NSDecimalNumber decimalNumberWithString: currentString];
@@ -70,39 +67,34 @@
 
 - (IBAction)mathSymbol:(UIButton *)sender {
     NSString *inputString = [[sender titleLabel] text];
-    NSString *currentString = self.inputLabel.text;
-    
-    if (self.flag == true) {
-        currentString = @"0";
-        self.flag = false;
-    }
+    NSString *currentString = self.currentLabel.text;
+    currentString = [self memoryFlagCheck: currentString];
     
     if ([inputString isEqualToString: @"."]) {
         NSRange range = [currentString rangeOfString: @"."];
         
         if (range.length == 0) {
-            self.inputLabel.text = [currentString stringByAppendingString: inputString];
+            self.currentLabel.text = [currentString stringByAppendingString: inputString];
         }
         
     } else if ([inputString isEqualToString: @"+-"]) {
         NSRange range = [currentString rangeOfString: @"-"];
         
         if (range.length == 0) {
-            self.inputLabel.text = [@"-" stringByAppendingString: currentString];
+            self.currentLabel.text = [@"-" stringByAppendingString: currentString];
         
         } else {
-            self.inputLabel.text = [currentString substringFromIndex: 1];
+            self.currentLabel.text = [currentString substringFromIndex: 1];
         }
+        
+    } else {
+        [self resetLabels];
     }
-}
-
-- (IBAction)clearAll:(UIButton *)sender {
-    [self resetLabels];
 }
 
 - (IBAction)memoryExpression:(UIButton *)sender {
     NSString *inputString = [[sender titleLabel] text];
-    NSString *currentString = self.inputLabel.text;
+    NSString *currentString = self.currentLabel.text;
     NSDecimalNumber *currentNumber = [NSDecimalNumber decimalNumberWithString: currentString];
     self.flag = true;
     
@@ -114,7 +106,7 @@
         
     } else if ([inputString isEqualToString: @"MR"]) {
         NSString *memoryString = [NSString stringWithFormat: @"%@", self.memoryNumber];
-        self.inputLabel.text = memoryString;
+        self.currentLabel.text = memoryString;
         
     } else {
         self.memoryNumber = (NSDecimalNumber *)[NSDecimalNumber numberWithInt: 0];
@@ -136,6 +128,10 @@
         resultNumber = [resultNumber decimalNumberByMultiplyingBy: currentNumber];
         
     } else if ([operator isEqualToString: @"/"]) {
+        
+        if ([currentNumber doubleValue] == 0) {
+            return result = @"Error";
+        }
         resultNumber = [resultNumber decimalNumberByDividingBy: currentNumber];
         
     } else if ([operator isEqualToString: @"="]) {
@@ -150,9 +146,24 @@
 }
 
 - (void)resetLabels {
-    self.inputLabel.text = @"0";
+    self.currentLabel.text = @"0";
     self.resultLabel.text = @" ";
     self.operatorLabel.text = @" ";
+}
+
+- (void)limitLabelLength {
+    if ([self.currentLabel.text length] > 15) {
+        self.currentLabel.text = [self.currentLabel.text substringToIndex: 15];
+    }
+}
+
+- (NSString *)memoryFlagCheck: (NSString *)currentString {
+    if (self.flag == true) {
+        self.flag = false;
+        currentString = @"0";
+    }
+    
+    return currentString;
 }
 
 @end
