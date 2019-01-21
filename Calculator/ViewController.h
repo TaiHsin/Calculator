@@ -10,6 +10,8 @@
 
 @interface ViewController : UIViewController
 
+- (NSString *)compose:(NSString *)origin input:(NSString *)input;
+
 @property (weak, nonatomic) IBOutlet UILabel *operator;
 
 

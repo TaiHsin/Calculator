@@ -20,6 +20,60 @@
 
 @implementation ViewController
 
+- (NSString *)compose:(NSString *)origin input:(NSString *)input
+{
+    if ([origin isEqualToString:@"0"]) {
+        if ([input isEqualToString:@"0"]) {
+            return @"0";
+        }
+        else if ([input isEqualToString:@"."]) {
+            return @"0.";
+        }
+        else if ([input isEqualToString:@"+-"]) {
+            return @"-0";
+        }
+        else {
+            return input;
+        }
+    }
+    if ([origin isEqualToString:@"-0"]) {
+        if ([input isEqualToString:@"0"]) {
+            return @"-0";
+        }
+        else if ([input isEqualToString:@"."]) {
+            return @"-0.";
+        }
+        else if ([input isEqualToString:@"+-"]) {
+            return @"0";
+        }
+        else {
+            return [NSString stringWithFormat:@"-%@", input];
+        }
+    }
+    if ([origin length] >= 15) {
+        return origin;
+    }
+
+    if ([input isEqualToString:@"."]) {
+        if ([origin rangeOfString:@"."].location != NSNotFound) {
+            return origin;
+        }
+        else {
+            return [NSString stringWithFormat:@"%@.", origin];
+        }
+    }
+    if ([input isEqualToString:@"+-"]) {
+        if ([origin characterAtIndex:0]  == '-') {
+            return [origin substringFromIndex:1];
+        }
+        else {
+            return [NSString stringWithFormat:@"-%@", origin];
+        }
+    }
+    
+    return [NSString stringWithFormat:@"%@%@", origin, input];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self resetLabels];
@@ -95,6 +149,9 @@
 - (IBAction)memoryExpression:(UIButton *)sender {
     NSString *inputString = [[sender titleLabel] text];
     NSString *currentString = self.currentLabel.text;
+    
+    // Refactor: another method
+    
     NSDecimalNumber *currentNumber = [NSDecimalNumber decimalNumberWithString: currentString];
     self.flag = true;
     
@@ -116,7 +173,7 @@
 - (NSString *)calculateResult:(NSString *)operator
                    withResult:(NSDecimalNumber *)resultNumber
                   withCurrent:(NSDecimalNumber *)currentNumber {
-    NSString *result = [[NSString alloc] init];
+
     
     if ([operator isEqualToString: @"+"]) {
         resultNumber = [resultNumber decimalNumberByAdding: currentNumber];
@@ -128,9 +185,8 @@
         resultNumber = [resultNumber decimalNumberByMultiplyingBy: currentNumber];
         
     } else if ([operator isEqualToString: @"/"]) {
-        
         if ([currentNumber doubleValue] == 0) {
-            return result = @"Error";
+            return @"Error";
         }
         resultNumber = [resultNumber decimalNumberByDividingBy: currentNumber];
         
@@ -141,7 +197,7 @@
         resultNumber = currentNumber;
     }
     
-    result = [NSString stringWithFormat: @"%@", resultNumber];
+    NSString *result = [NSString stringWithFormat: @"%@", resultNumber];
     return result;
 }
 
